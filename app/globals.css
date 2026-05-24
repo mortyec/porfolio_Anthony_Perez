@@ -1,26 +1,194 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/*
+  Design tokens — engineer's workshop, midnight terminal.
+  Surfaces layer in 2-3% lightness shifts. Borders carry the structure.
+  Accents are reserved: blue for system/links, violet for AI/runtime.
+*/
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Surface elevation — whisper layering */
+  --color-canvas: #050507;          /* base */
+  --color-surface-1: #0a0a0d;       /* +1 elevation */
+  --color-surface-2: #101015;       /* +2 elevation (cards) */
+  --color-surface-3: #15151c;       /* +3 elevation (hover, popovers) */
+  --color-surface-4: #1c1c25;       /* +4 elevation (max) */
+
+  /* Borders — invisible until you look */
+  --color-hairline: rgba(255, 255, 255, 0.04);
+  --color-line: rgba(255, 255, 255, 0.06);
+  --color-edge: rgba(255, 255, 255, 0.10);
+  --color-edge-strong: rgba(255, 255, 255, 0.16);
+
+  /* Text — four-tier hierarchy */
+  --color-ink: #f4f4f5;             /* primary */
+  --color-ink-soft: #d4d4d8;        /* secondary */
+  --color-ink-mute: #71717a;        /* tertiary / metadata */
+  --color-ink-faint: #3f3f46;       /* disabled / placeholder */
+
+  /* Accents — used surgically, not decoratively */
+  --color-accent: #3b82f6;          /* electric blue: links, system, build */
+  --color-accent-soft: rgba(59, 130, 246, 0.12);
+  --color-accent-edge: rgba(59, 130, 246, 0.28);
+  --color-runtime: #8b5cf6;         /* violet: AI, runtime, live */
+  --color-runtime-soft: rgba(139, 92, 246, 0.12);
+
+  /* Semantic */
+  --color-live: #22c55e;
+  --color-live-soft: rgba(34, 197, 94, 0.12);
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Radius scale */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* Shadows — only for floating elements */
+  --shadow-float: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-glow-blue: 0 0 0 1px rgba(59, 130, 246, 0.4), 0 0 24px rgba(59, 130, 246, 0.25);
+  --shadow-glow-violet: 0 0 0 1px rgba(139, 92, 246, 0.4), 0 0 24px rgba(139, 92, 246, 0.25);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Reset + base */
+html,
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Slight vignette — anchors content, hides edges */
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(59, 130, 246, 0.08), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(139, 92, 246, 0.06), transparent 60%);
+  background-attachment: fixed;
+}
+
+/* Selection */
+::selection {
+  background: rgba(59, 130, 246, 0.32);
+  color: #fff;
+}
+
+/* Custom utilities */
+@layer utilities {
+  /* Schematic grid background — blueprint feel */
+  .grid-blueprint {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    background-position: -1px -1px;
+  }
+
+  .grid-blueprint-fine {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Soft mask for fading edges */
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+  .mask-fade-radial {
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 40%, transparent 100%);
+  }
+
+  /* Glassmorphism — reserved for navbar overlay only */
+  .glass-pane {
+    background: rgba(10, 10, 13, 0.7);
+    backdrop-filter: saturate(140%) blur(14px);
+    -webkit-backdrop-filter: saturate(140%) blur(14px);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  /* Tech badge — pulse glow on dot */
+  .pulse-dot::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: currentColor;
+    opacity: 0.5;
+    animation: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+/* Keyframes */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.5; }
+  80%, 100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes drift-slow {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-2%, 2%); }
+}
+
+@keyframes loader-bar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+/* Scrollbar — quiet, doesn't shout */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  border: 2px solid var(--color-canvas);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* Focus rings — keyboard-only, branded */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Lenis smooth scroll requirements */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
 }

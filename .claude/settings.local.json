@@ -1,0 +1,47 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm tsc *)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(pnpm lint *)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs",
+      "Read(//private/tmp/**)",
+      "Bash(pnpm exec *)",
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(awk '/^## 2.6/,/^## 2\\\\.[0-9]/' /Users/vehicentro/Documents/projects/vhcr-360/prompts/generar-parrilla.txt)",
+      "Bash(npx tsc *)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(xargs ls -la)",
+      "Bash(pnpm eslint *)",
+      "Bash(/Users/vehicentro/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/skills/brainstorming/scripts/start-server.sh *)",
+      "Bash(echo \"EXIT_CODE=$?\")",
+      "Bash(pnpm build *)",
+      "Bash(echo \"---EXIT: $?\")",
+      "Bash(mkdir -p /Users/vehicentro/Documents/projects/vhcr-360/public/fonts)",
+      "Bash(cp *.otf *.ttf /Users/vehicentro/Documents/projects/vhcr-360/public/fonts/)",
+      "Bash(grep -n \"const StrokeSection\\\\|updateElement\\(element.id, {$\" /Users/vehicentro/Documents/projects/vhcr-360/app/test/_components/editor/PropertiesPanel.tsx)",
+      "Bash(awk -F: '{print $3}')",
+      "Bash(echo \"exit:$?\")",
+      "Bash(python3 *)",
+      "Bash(pnpm next *)",
+      "Bash(echo \"TS_EXIT=$?\")",
+      "Bash(tee /tmp/tsc-output.txt)",
+      "Skill(interface-design)",
+      "Skill(code-review:code-review)",
+      "Bash(xargs sed -i '' 's|@/modules/marketing/crear-posts/crear-posts\\\\.|@/modules/marketing/posts/posts.|g')",
+      "Bash(sed -n '88,100p' FineTuneRow.tsx)",
+      "Bash(sed -n '144,156p' FineTuneRow.tsx)",
+      "Bash(sed -n '452,467p' FineTuneRow.tsx)",
+      "Bash(sed -n '553,562p' FineTuneRow.tsx)",
+      "Bash(sed -n '263,330p' VariantsPanel.tsx)",
+      "Bash(sed -n '24,54p' DialogAddVariantPhotos.tsx)",
+      "Bash(sed -n '1,6p' VariantsPanel.tsx)",
+      "Bash(sed -n '90,110p' VariantsPanel.tsx)",
+      "Bash(sed -n '145,175p' VariantsPanel.tsx)"
+    ]
+  },
+  "disabledMcpjsonServers": [
+    "supabase"
+  ]
+}
