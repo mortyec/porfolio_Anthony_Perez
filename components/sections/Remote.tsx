@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Mail, ArrowUpRight, MapPin, Clock, Languages, Wifi } from 'lucide-react'
+import { Mail, ArrowUpRight, Languages, Wifi } from 'lucide-react'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { GithubIcon, LinkedinIcon, WhatsappIcon } from '@/components/ui/BrandIcons'
 import { useT } from '@/components/providers/LanguageProvider'
@@ -9,8 +9,6 @@ import { Accent } from '@/lib/i18n/Accent'
 
 const itemDefs = [
   { key: 'remote', icon: Wifi },
-  { key: 'async', icon: Clock },
-  { key: 'based', icon: MapPin },
   { key: 'languages', icon: Languages },
 ] as const
 
@@ -57,7 +55,7 @@ export function Remote() {
             whileInView="visible"
             viewport={{ once: true, margin: '-40px' }}
             variants={containerVariants}
-            className="grid w-full max-w-4xl grid-cols-1 gap-px overflow-hidden rounded-xl border border-[var(--color-line)] bg-[var(--color-line)] sm:grid-cols-2 lg:grid-cols-4"
+            className="grid w-full max-w-xl grid-cols-1 gap-px overflow-hidden rounded-xl border border-[var(--color-line)] bg-[var(--color-line)] sm:grid-cols-2"
           >
             {itemDefs.map((item) => {
               const Icon = item.icon
